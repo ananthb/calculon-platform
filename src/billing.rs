@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use worker::*;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub enum BillingStatus {

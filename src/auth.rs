@@ -1,7 +1,7 @@
+use chrono::{Duration, Utc};
+use jsonwebtoken::{decode, encode, Algorithm, DecodingKey, EncodingKey, Header, Validation};
 use serde::{Deserialize, Serialize};
 use worker::*;
-use jsonwebtoken::{encode, decode, Header, Algorithm, Validation, EncodingKey, DecodingKey};
-use chrono::{Utc, Duration};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
@@ -27,8 +27,12 @@ impl Auth {
             email: email.to_string(),
         };
 
-        encode(&Header::default(), &claims, &EncodingKey::from_secret(self.secret.as_bytes()))
-            .map_err(|e| Error::from(format!("JWT encode error: {e}")))
+        encode(
+            &Header::default(),
+            &claims,
+            &EncodingKey::from_secret(self.secret.as_bytes()),
+        )
+        .map_err(|e| Error::from(format!("JWT encode error: {e}")))
     }
 
     pub fn verify_session(&self, token: &str) -> Result<Claims> {
@@ -37,7 +41,8 @@ impl Auth {
             token,
             &DecodingKey::from_secret(self.secret.as_bytes()),
             &validation,
-        ).map_err(|e| Error::from(format!("JWT decode error: {e}")))?;
+        )
+        .map_err(|e| Error::from(format!("JWT decode error: {e}")))?;
 
         Ok(token_data.claims)
     }
