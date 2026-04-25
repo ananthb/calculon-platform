@@ -3,6 +3,8 @@ name = "calculon-platform"
 version = "0.1.0"
 edition = "2021"
 license = "AGPL-3.0"
+description = "Shared primitives for the calculon.tech platform — Auth, Multitenancy, and Billing for Cloudflare Workers"
+repository = "https://github.com/ananthb/calculon-platform"
 
 [dependencies]
 worker = { version = "0.7", features = ["d1"] }
