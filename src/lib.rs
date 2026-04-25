@@ -1,14 +1,21 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
+use serde::{Deserialize, Serialize};
+use worker::*;
+
+pub mod auth;
+pub mod billing;
+pub mod tenant;
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct User {
+    pub id: String,
+    pub email: String,
+    pub name: Option<String>,
+    pub avatar_url: Option<String>,
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub struct Tenant {
+    pub id: String,
+    pub name: String,
+    pub billing_status: String,
 }
